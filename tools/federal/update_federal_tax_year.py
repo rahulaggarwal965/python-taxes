@@ -5,7 +5,7 @@ Systems, validates the data, and updates the source files. Also fetches the
 Social Security wage base from the Federal Register.
 
 Usage:
-    uv run --group tools python tools/update_tax_year.py [OPTIONS]
+    uv run --group tools python tools/federal/update_federal_tax_year.py [OPTIONS]
 
 Options:
     --year YEAR       Tax year to add (auto-detected from PDF if omitted)
@@ -27,7 +27,7 @@ MAX = Decimal("999999999999.99")
 
 IRS_PDF_URL = "https://www.irs.gov/pub/irs-pdf/p15t.pdf"
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 SINGLE_PATH = (
     REPO_ROOT
     / "src/python_taxes/federal/income/tables/percentage/automated/single.py"

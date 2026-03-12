@@ -1,11 +1,11 @@
-"""Tests for tools/update_tax_year.py.
+"""Tests for tools/federal/update_federal_tax_year.py.
 
 Verifies the PDF extraction pipeline produces values that exactly match
 the manually-verified data already committed in the codebase, for every
 year where we have both a PDF and codebase data.
 
 Usage:
-    uv run --group tools --group test python -m pytest tests/tools/ -v
+    uv run --group tools --group test python -m pytest tests/tools/federal/ -v
 """
 
 import sys
@@ -15,10 +15,10 @@ from pathlib import Path
 
 import pytest
 
-# Make the tools directory importable
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "tools"))
+# Make the tools/federal directory importable
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent / "tools" / "federal"))
 
-import update_tax_year as tool  # noqa: E402
+import update_federal_tax_year as tool  # noqa: E402
 
 from python_taxes.federal.income.tables.percentage import MAX  # noqa: E402
 from python_taxes.federal.income.tables.percentage.automated import (  # noqa: E402
