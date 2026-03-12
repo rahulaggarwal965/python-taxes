@@ -14,6 +14,6 @@ rounding = {
 
 # AfterValidator for tax_year
 def is_valid_tax_year(value: int) -> int:
-    if value in [2023, 2024, 2025]:
+    if value in [2023, 2024, 2025, 2026]:
         return value
-    raise ValueError("Invalid tax year. Valid tax years are 2023, 2024, and 2025.")
+    raise ValueError("Invalid tax year. Valid tax years are 2023, 2024, 2025, and 2026.")

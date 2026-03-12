@@ -2,6 +2,6 @@ from decimal import Decimal
 
 from pydantic import Field
 
-CURRENT_TAX_YEAR = 2025
+CURRENT_TAX_YEAR = 2026
 
 currency_field = Field(ge=Decimal("0.00"), decimal_places=2)

@@ -14,6 +14,7 @@ wage_limit = {
     2023: Decimal("160200"),
     2024: Decimal("168600"),
     2025: Decimal("176100"),
+    2026: Decimal("184500"),
 }
 
 

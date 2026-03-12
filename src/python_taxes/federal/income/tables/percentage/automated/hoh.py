@@ -153,6 +153,56 @@ standard_schedule = {
             percent=37,
         ),
     ],
+    2026: [
+        RateRow(
+            min=Decimal("0.00"),
+            max=Decimal("15549.99"),
+            withhold_amount=Decimal("0.00"),
+            percent=0,
+        ),
+        RateRow(
+            min=Decimal("15550.00"),
+            max=Decimal("33249.99"),
+            withhold_amount=Decimal("0.00"),
+            percent=10,
+        ),
+        RateRow(
+            min=Decimal("33250.00"),
+            max=Decimal("82999.99"),
+            withhold_amount=Decimal("1770.00"),
+            percent=12,
+        ),
+        RateRow(
+            min=Decimal("83000.00"),
+            max=Decimal("121249.99"),
+            withhold_amount=Decimal("7740.00"),
+            percent=22,
+        ),
+        RateRow(
+            min=Decimal("121250.00"),
+            max=Decimal("217299.99"),
+            withhold_amount=Decimal("16155.00"),
+            percent=24,
+        ),
+        RateRow(
+            min=Decimal("217300.00"),
+            max=Decimal("271749.99"),
+            withhold_amount=Decimal("39207.00"),
+            percent=32,
+        ),
+        RateRow(
+            min=Decimal("271750.00"),
+            max=Decimal("656149.99"),
+            withhold_amount=Decimal("56631.00"),
+            percent=35,
+        ),
+        RateRow(
+            min=Decimal("656150.00"),
+            max=MAX,
+            withhold_amount=Decimal("191171.00"),
+            percent=37,
+        ),
+    ],
 }
 
 multiple_jobs = {
@@ -303,6 +353,56 @@ multiple_jobs = {
             min=Decimal("324425.00"),
             max=MAX,
             withhold_amount=Decimal("93515.75"),
+            percent=37,
+        ),
+    ],
+    2026: [
+        RateRow(
+            min=Decimal("0.00"),
+            max=Decimal("12074.99"),
+            withhold_amount=Decimal("0.00"),
+            percent=0,
+        ),
+        RateRow(
+            min=Decimal("12075.00"),
+            max=Decimal("20924.99"),
+            withhold_amount=Decimal("0.00"),
+            percent=10,
+        ),
+        RateRow(
+            min=Decimal("20925.00"),
+            max=Decimal("45799.99"),
+            withhold_amount=Decimal("885.00"),
+            percent=12,
+        ),
+        RateRow(
+            min=Decimal("45800.00"),
+            max=Decimal("64924.99"),
+            withhold_amount=Decimal("3870.00"),
+            percent=22,
+        ),
+        RateRow(
+            min=Decimal("64925.00"),
+            max=Decimal("112949.99"),
+            withhold_amount=Decimal("8077.50"),
+            percent=24,
+        ),
+        RateRow(
+            min=Decimal("112950.00"),
+            max=Decimal("140174.99"),
+            withhold_amount=Decimal("19603.50"),
+            percent=32,
+        ),
+        RateRow(
+            min=Decimal("140175.00"),
+            max=Decimal("332374.99"),
+            withhold_amount=Decimal("28315.50"),
+            percent=35,
+        ),
+        RateRow(
+            min=Decimal("332375.00"),
+            max=MAX,
+            withhold_amount=Decimal("95585.50"),
             percent=37,
         ),
     ],
