@@ -3,6 +3,68 @@ from decimal import Decimal
 from . import MAX, CARateRow
 
 schedule = {
+    2023: [
+        CARateRow(
+            min=Decimal("0"),
+            max=Decimal("20198"),
+            withhold_amount=Decimal("0.00"),
+            percent=Decimal("1.1"),
+        ),
+        CARateRow(
+            min=Decimal("20198"),
+            max=Decimal("47884"),
+            withhold_amount=Decimal("222.18"),
+            percent=Decimal("2.2"),
+        ),
+        CARateRow(
+            min=Decimal("47884"),
+            max=Decimal("75576"),
+            withhold_amount=Decimal("831.27"),
+            percent=Decimal("4.4"),
+        ),
+        CARateRow(
+            min=Decimal("75576"),
+            max=Decimal("104910"),
+            withhold_amount=Decimal("2049.72"),
+            percent=Decimal("6.6"),
+        ),
+        CARateRow(
+            min=Decimal("104910"),
+            max=Decimal("132590"),
+            withhold_amount=Decimal("3985.76"),
+            percent=Decimal("8.8"),
+        ),
+        CARateRow(
+            min=Decimal("132590"),
+            max=Decimal("677278"),
+            withhold_amount=Decimal("6421.60"),
+            percent=Decimal("10.23"),
+        ),
+        CARateRow(
+            min=Decimal("677278"),
+            max=Decimal("812728"),
+            withhold_amount=Decimal("62143.18"),
+            percent=Decimal("11.33"),
+        ),
+        CARateRow(
+            min=Decimal("812728"),
+            max=Decimal("1000000"),
+            withhold_amount=Decimal("77489.67"),
+            percent=Decimal("12.43"),
+        ),
+        CARateRow(
+            min=Decimal("1000000"),
+            max=Decimal("1354550"),
+            withhold_amount=Decimal("100767.58"),
+            percent=Decimal("13.53"),
+        ),
+        CARateRow(
+            min=Decimal("1354550"),
+            max=MAX,
+            withhold_amount=Decimal("148738.20"),
+            percent=Decimal("14.63"),
+        ),
+    ],
     2024: [
         CARateRow(
             min=Decimal("0"),

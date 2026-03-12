@@ -3,6 +3,68 @@ from decimal import Decimal
 from . import MAX, CARateRow
 
 schedule = {
+    2023: [
+        CARateRow(
+            min=Decimal("0"),
+            max=Decimal("10099"),
+            withhold_amount=Decimal("0.00"),
+            percent=Decimal("1.1"),
+        ),
+        CARateRow(
+            min=Decimal("10099"),
+            max=Decimal("23942"),
+            withhold_amount=Decimal("111.09"),
+            percent=Decimal("2.2"),
+        ),
+        CARateRow(
+            min=Decimal("23942"),
+            max=Decimal("37788"),
+            withhold_amount=Decimal("415.64"),
+            percent=Decimal("4.4"),
+        ),
+        CARateRow(
+            min=Decimal("37788"),
+            max=Decimal("52455"),
+            withhold_amount=Decimal("1024.86"),
+            percent=Decimal("6.6"),
+        ),
+        CARateRow(
+            min=Decimal("52455"),
+            max=Decimal("66295"),
+            withhold_amount=Decimal("1992.88"),
+            percent=Decimal("8.8"),
+        ),
+        CARateRow(
+            min=Decimal("66295"),
+            max=Decimal("338639"),
+            withhold_amount=Decimal("3210.80"),
+            percent=Decimal("10.23"),
+        ),
+        CARateRow(
+            min=Decimal("338639"),
+            max=Decimal("406364"),
+            withhold_amount=Decimal("31071.59"),
+            percent=Decimal("11.33"),
+        ),
+        CARateRow(
+            min=Decimal("406364"),
+            max=Decimal("677275"),
+            withhold_amount=Decimal("38744.83"),
+            percent=Decimal("12.43"),
+        ),
+        CARateRow(
+            min=Decimal("677275"),
+            max=Decimal("1000000"),
+            withhold_amount=Decimal("72419.07"),
+            percent=Decimal("13.53"),
+        ),
+        CARateRow(
+            min=Decimal("1000000"),
+            max=MAX,
+            withhold_amount=Decimal("116083.76"),
+            percent=Decimal("14.63"),
+        ),
+    ],
     2024: [
         CARateRow(
             min=Decimal("0"),
