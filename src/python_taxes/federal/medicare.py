@@ -31,6 +31,9 @@ def required_withholding(
 ) -> Decimal:
     """Calculate required amount to withhold regardless of filing status.
 
+    The Additional Medicare rate applies only to wages past the threshold,
+    so a period that crosses it pays the additional rate on the excess alone.
+
     Parameters:
     taxable_wages -- Wages earned this period
     taxable_wages_ytd -- Wages earned this year
@@ -45,13 +48,14 @@ def required_withholding(
     else:
         tax_rate = STANDARD_PERCENT
 
-    if (
-        taxable_wages > DEFAULT_THRESHOLD
-        or (taxable_wages_ytd + taxable_wages) > DEFAULT_THRESHOLD
-    ):
-        tax_rate = tax_rate + ADDITIONAL_PERCENT
+    over_threshold = max(
+        Decimal("0.00"),
+        taxable_wages_ytd + taxable_wages - max(taxable_wages_ytd, DEFAULT_THRESHOLD),
+    )
 
-    return (taxable_wages * tax_rate).quantize(rounding[rounded])
+    return (taxable_wages * tax_rate + over_threshold * ADDITIONAL_PERCENT).quantize(
+        rounding[rounded]
+    )
 
 
 @validate_call

@@ -156,3 +156,24 @@ def test_additional_withholding(wages_ytd, status, self_emp, rounded, expected):
         medicare.additional_withholding(wages_ytd, status, self_emp, rounded)
         == expected
     )
+
+
+# Additional Medicare applies only to wages past the threshold
+@pytest.mark.parametrize(
+    "wages, wages_ytd, self_emp, expected",
+    [
+        (10000.00, 195000.00, False, Decimal("190.00")),
+        (250000.00, 0, False, Decimal("4075.00")),
+        (10000.00, 190000.00, False, Decimal("145.00")),
+        (50000.00, 180000.00, True, Decimal("1450.72")),
+    ],
+)
+def test_required_withholding_crossing_threshold(wages, wages_ytd, self_emp, expected):
+    assert (
+        medicare.required_withholding(
+            taxable_wages=wages,
+            taxable_wages_ytd=wages_ytd,
+            self_employed=self_emp,
+        )
+        == expected
+    )
