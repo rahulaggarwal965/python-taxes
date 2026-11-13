@@ -4,12 +4,17 @@ Downloads the PDF, extracts the Percentage Method Tables for Automated Payroll
 Systems, validates the data, and updates the source files. Also fetches the
 Social Security wage base from the Federal Register.
 
+SSA publishes each year's wage base in October, two months before Pub 15-T,
+so --ss-only adds just the wage base for --year. If a source isn't published
+yet, the tool says so and exits 0 without changing anything.
+
 Usage:
     uv run --group tools python tools/federal/update_federal_tax_year.py [OPTIONS]
 
 Options:
     --year YEAR       Tax year to add (auto-detected from PDF if omitted)
     --pdf PATH_OR_URL Path to local PDF or URL (default: IRS website)
+    --ss-only         Only add the Social Security wage base for --year
     --dry-run         Print extracted data without modifying files
 """
 
@@ -69,6 +74,10 @@ FILING_STATUSES = [
     ("single", re.compile(r"Single or Married Filing Separately")),
     ("hoh", re.compile(r"Head of Household")),
 ]
+
+
+class NotYetPublished(Exception):
+    """A source for the requested tax year hasn't been published yet."""
 
 
 class BracketRow(NamedTuple):
@@ -449,7 +458,7 @@ def fetch_ss_wage_base(year: int) -> Decimal:
             break
 
     if doc is None:
-        raise ValueError(
+        raise NotYetPublished(
             f"Could not find Federal Register COLA notice for {year}. "
             f"Searched {len(data.get('results', []))} results."
         )
@@ -591,6 +600,11 @@ def parse_args() -> argparse.Namespace:
         help="Path to local PDF or URL to download",
     )
     parser.add_argument(
+        "--ss-only",
+        action="store_true",
+        help="Only add the Social Security wage base for --year",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print extracted data without modifying files",
@@ -600,6 +614,14 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+
+    if args.ss_only:
+        if args.year is None:
+            raise ValueError("--ss-only requires --year")
+        print("Social Security wage base:")
+        wage_base = fetch_ss_wage_base(args.year)
+        update_ss_wage_base(args.year, wage_base, args.dry_run)
+        return
 
     try:
         import pdfplumber
@@ -677,6 +699,8 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
+    except NotYetPublished as e:
+        print(f"Not published yet: {e}")
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)

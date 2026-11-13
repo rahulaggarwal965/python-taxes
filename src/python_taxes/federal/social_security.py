@@ -4,7 +4,7 @@ from typing import Annotated
 from pydantic import AfterValidator, StrictBool, validate_call
 
 from python_taxes import CURRENT_TAX_YEAR, currency_field
-from python_taxes.federal import is_valid_tax_year, rounding
+from python_taxes.federal import rounding
 
 STANDARD_TAX = Decimal("6.200") / 100
 
@@ -15,7 +15,18 @@ wage_limit = {
     2024: Decimal("168600"),
     2025: Decimal("176100"),
     2026: Decimal("184500"),
+    2027: Decimal("192300"),
 }
+
+
+# AfterValidator for tax_year. Checked against wage_limit rather than
+# is_valid_tax_year: SSA publishes each wage base in October, before the
+# year's Pub 15-T income tax tables exist.
+def is_valid_ss_tax_year(value: int) -> int:
+    if value in wage_limit:
+        return value
+    years = ", ".join(str(year) for year in sorted(wage_limit))
+    raise ValueError(f"Invalid tax year. Valid Social Security tax years: {years}.")
 
 
 @validate_call
@@ -23,7 +34,7 @@ def withholding(
     taxable_wages: Annotated[Decimal, currency_field],
     taxable_wages_ytd: Annotated[Decimal, currency_field] = Decimal("0.00"),
     self_employed: StrictBool = False,
-    tax_year: Annotated[int, AfterValidator(is_valid_tax_year)] = CURRENT_TAX_YEAR,
+    tax_year: Annotated[int, AfterValidator(is_valid_ss_tax_year)] = CURRENT_TAX_YEAR,
     rounded: StrictBool = False,
 ) -> Decimal:
     """

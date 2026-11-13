@@ -111,3 +111,25 @@ def test_withholding_2024(wages, wages_ytd, self_emp, year, rounded, expected):
                 )
                 == e
             )
+
+
+# Tax years are validated against wage_limit, which can run ahead of the
+# income tax tables: SSA publishes each wage base before Pub 15-T comes out
+@pytest.mark.parametrize(
+    "wages, wages_ytd, year, expected",
+    [
+        (10000, 190000, 2027, nullcontext(Decimal("142.60"))),
+        (10000, 190000, 2026, nullcontext(Decimal("0.00"))),
+        (10000, 0, 2099, pytest.raises(ValidationError)),
+    ],
+)
+def test_withholding_wage_limit_years(wages, wages_ytd, year, expected):
+    with expected as e:
+        assert (
+            social_security.withholding(
+                taxable_wages=wages,
+                taxable_wages_ytd=wages_ytd,
+                tax_year=year,
+            )
+            == e
+        )

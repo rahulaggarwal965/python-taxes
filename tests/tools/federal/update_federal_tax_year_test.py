@@ -325,12 +325,31 @@ class TestCodeGeneration:
 class TestSSWageBase:
     """Verify SS wage base fetched from Federal Register matches codebase data."""
 
-    @pytest.mark.parametrize("year", [2024, 2025, 2026])
+    @pytest.mark.parametrize("year", [2024, 2025, 2026, 2027])
     def test_matches_codebase(self, year):
         fetched = tool.fetch_ss_wage_base(year)
         assert fetched == wage_limit[year], (
             f"SS wage base mismatch for {year}: fetched {fetched} != codebase {wage_limit[year]}"
         )
+
+    def test_unpublished_year_raises_not_yet_published(self, monkeypatch):
+        """No COLA notice for the year yet means 'not published', not an error."""
+
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+            def read(self):
+                return b'{"results": [{"title": "Determinations for 2026"}]}'
+
+        monkeypatch.setattr(
+            tool.urllib.request, "urlopen", lambda req: FakeResponse()
+        )
+        with pytest.raises(tool.NotYetPublished):
+            tool.fetch_ss_wage_base(2099)
 
 
 # ---------------------------------------------------------------------------
