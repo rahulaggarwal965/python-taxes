@@ -251,4 +251,66 @@ schedule = {
             percent=Decimal("14.63"),
         ),
     ],
+    2027: [
+        CARateRow(
+            min=Decimal("0"),
+            max=Decimal("22927"),
+            withhold_amount=Decimal("0.00"),
+            percent=Decimal("1.1"),
+        ),
+        CARateRow(
+            min=Decimal("22927"),
+            max=Decimal("54316"),
+            withhold_amount=Decimal("252.20"),
+            percent=Decimal("2.2"),
+        ),
+        CARateRow(
+            min=Decimal("54316"),
+            max=Decimal("70018"),
+            withhold_amount=Decimal("942.76"),
+            percent=Decimal("4.4"),
+        ),
+        CARateRow(
+            min=Decimal("70018"),
+            max=Decimal("86654"),
+            withhold_amount=Decimal("1633.65"),
+            percent=Decimal("6.6"),
+        ),
+        CARateRow(
+            min=Decimal("86654"),
+            max=Decimal("102356"),
+            withhold_amount=Decimal("2731.63"),
+            percent=Decimal("8.8"),
+        ),
+        CARateRow(
+            min=Decimal("102356"),
+            max=Decimal("522385"),
+            withhold_amount=Decimal("4113.41"),
+            percent=Decimal("10.23"),
+        ),
+        CARateRow(
+            min=Decimal("522385"),
+            max=Decimal("626864"),
+            withhold_amount=Decimal("47082.38"),
+            percent=Decimal("11.33"),
+        ),
+        CARateRow(
+            min=Decimal("626864"),
+            max=Decimal("1000000"),
+            withhold_amount=Decimal("58919.85"),
+            percent=Decimal("12.43"),
+        ),
+        CARateRow(
+            min=Decimal("1000000"),
+            max=Decimal("1034000"),
+            withhold_amount=Decimal("105300.65"),
+            percent=Decimal("13.53"),
+        ),
+        CARateRow(
+            min=Decimal("1034000"),
+            max=MAX,
+            withhold_amount=Decimal("109900.85"),
+            percent=Decimal("14.63"),
+        ),
+    ],
 }

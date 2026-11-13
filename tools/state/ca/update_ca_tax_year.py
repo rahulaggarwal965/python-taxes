@@ -16,6 +16,7 @@ import argparse
 import re
 import sys
 import tempfile
+import urllib.error
 import urllib.request
 from decimal import Decimal
 from pathlib import Path
@@ -42,7 +43,8 @@ DOLLAR_RE = re.compile(r"\$([\d,]+(?:\.\d+)?)")
 FILING_STATUSES = [
     ("single", re.compile(r"Single.*Persons|SINGLE.*PERSONS|Single.*Dual")),
     ("married", re.compile(r"(?<!Un)Married Persons|(?<!UN)MARRIED PERSONS")),
-    ("hoh", re.compile(r"Unmarried.*Head|UNMARRIED.*HEAD")),
+    # The 2027 PDF wraps "Unmarried/" and "Head of Household" onto separate lines
+    ("hoh", re.compile(r"Unmarried|UNMARRIED")),
 ]
 
 
@@ -63,6 +65,10 @@ class LookupTables(NamedTuple):
     estimated_deduction: Decimal    # Table 2: per-allowance annual deduction
 
 
+class NotYetPublished(Exception):
+    """EDD hasn't posted the DE 44 PDF for the requested tax year yet."""
+
+
 class TableData(NamedTuple):
     filing_status: str
     rows: list[CARateRow]
@@ -78,7 +84,12 @@ def acquire_pdf(source: str) -> str:
     if source.startswith(("http://", "https://")):
         tmp = tempfile.NamedTemporaryFile(suffix=".pdf", delete=False)
         print(f"Downloading PDF from {source} ...")
-        urllib.request.urlretrieve(source, tmp.name)
+        try:
+            urllib.request.urlretrieve(source, tmp.name)
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                raise NotYetPublished(f"{source} returned 404") from e
+            raise
         print(f"Saved to {tmp.name}")
         return tmp.name
     path = Path(source)
@@ -594,6 +605,8 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
+    except NotYetPublished as e:
+        print(f"Not published yet: {e}")
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)

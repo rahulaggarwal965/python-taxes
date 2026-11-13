@@ -49,6 +49,7 @@ EDD_PDF_URLS = {
     2024: "https://edd.ca.gov/siteassets/files/pdf_pub_ctr/24methb.pdf",
     2025: "https://edd.ca.gov/siteassets/files/pdf_pub_ctr/25methb.pdf",
     2026: "https://edd.ca.gov/siteassets/files/pdf_pub_ctr/26methb.pdf",
+    2027: "https://edd.ca.gov/siteassets/files/pdf_pub_ctr/27methb.pdf",
 }
 
 PDF_PATHS = {
@@ -296,3 +297,15 @@ def _make_extraction_tests(year):
 TestExtraction2024 = _make_extraction_tests(2024)
 TestExtraction2025 = _make_extraction_tests(2025)
 TestExtraction2026 = _make_extraction_tests(2026)
+TestExtraction2027 = _make_extraction_tests(2027)
+
+
+def test_missing_pdf_raises_not_yet_published(monkeypatch):
+    """EDD returns 404 until it posts a year's PDF: 'not published', not an error."""
+
+    def fake_urlretrieve(url, filename):
+        raise tool.urllib.error.HTTPError(url, 404, "Not Found", None, None)
+
+    monkeypatch.setattr(tool.urllib.request, "urlretrieve", fake_urlretrieve)
+    with pytest.raises(tool.NotYetPublished):
+        tool.acquire_pdf(tool.EDD_PDF_URL_TEMPLATE.format(yy="99"))

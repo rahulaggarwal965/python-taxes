@@ -27,6 +27,7 @@ low_income_exemption = {
     2024: (Decimal("17769"), Decimal("35538")),
     2025: (Decimal("18368"), Decimal("36736")),
     2026: (Decimal("18896"), Decimal("37791")),
+    2027: (Decimal("19528"), Decimal("39056")),
 }
 
 standard_deduction = {
@@ -34,6 +35,7 @@ standard_deduction = {
     2024: (Decimal("5363"), Decimal("10726")),
     2025: (Decimal("5540"), Decimal("11080")),
     2026: (Decimal("5706"), Decimal("11412")),
+    2027: (Decimal("5900"), Decimal("11800")),
 }
 
 exemption_allowance_credit = {
@@ -41,6 +43,7 @@ exemption_allowance_credit = {
     2024: Decimal("158.40"),
     2025: Decimal("163.90"),
     2026: Decimal("168.30"),
+    2027: Decimal("173.80"),
 }
 
 estimated_deduction_allowance = {
@@ -48,4 +51,5 @@ estimated_deduction_allowance = {
     2024: Decimal("1000"),
     2025: Decimal("1000"),
     2026: Decimal("1000"),
+    2027: Decimal("1000"),
 }
